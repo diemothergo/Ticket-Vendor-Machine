@@ -3,8 +3,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
+using Ticket_Vendor_Machine;
 
-namespace TicketVendorApp
+namespace Ticket_Vendor_Machine
 {
     public partial class TicketForm : Form
     {
@@ -14,11 +15,6 @@ namespace TicketVendorApp
         private Button btnBuyTicket;
         private DataGridView dgvTickets;
         private Label lblStatus;
-
-        public TicketForm()
-        {
-            InitializeComponent();
-        }
 
         private void InitializeComponent()
         {
@@ -44,14 +40,16 @@ namespace TicketVendorApp
             txtPaymentDetail.Size = new System.Drawing.Size(200, 25);
             txtPaymentDetail.ForeColor = Color.Gray;
             txtPaymentDetail.Text = "Nhập thông tin thanh toán...";
-            txtPaymentDetail.GotFocus += (s, e) => {
+            txtPaymentDetail.GotFocus += (s, e) =>
+            {
                 if (txtPaymentDetail.Text == "Nhập thông tin thanh toán...")
                 {
                     txtPaymentDetail.Text = "";
                     txtPaymentDetail.ForeColor = Color.Black;
                 }
             };
-            txtPaymentDetail.LostFocus += (s, e) => {
+            txtPaymentDetail.LostFocus += (s, e) =>
+            {
                 if (string.IsNullOrWhiteSpace(txtPaymentDetail.Text))
                 {
                     txtPaymentDetail.Text = "Nhập thông tin thanh toán...";
@@ -129,7 +127,7 @@ namespace TicketVendorApp
         {
             try
             {
-                string connStr = "Data Source=.;Initial Catalog=TicketSystem;Integrated Security=True";
+                string connStr = "Data Source=LAPTOP-BTH5K0DR\\SQLEXPRESS01;Initial Catalog=TicketSystem;Integrated Security=True";
                 using (SqlConnection con = new SqlConnection(connStr))
                 {
                     con.Open();

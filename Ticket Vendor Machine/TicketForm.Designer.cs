@@ -40,14 +40,6 @@ namespace Ticket_Vendor_Machine
             txtPaymentDetail.Size = new System.Drawing.Size(200, 25);
             txtPaymentDetail.ForeColor = Color.Gray;
             txtPaymentDetail.Text = "Nhập thông tin thanh toán...";
-            txtPaymentDetail.GotFocus += (s, e) =>
-            {
-                if (txtPaymentDetail.Text == "Nhập thông tin thanh toán...")
-                {
-                    txtPaymentDetail.Text = "";
-                    txtPaymentDetail.ForeColor = Color.Black;
-                }
-            };
             txtPaymentDetail.LostFocus += (s, e) =>
             {
                 if (string.IsNullOrWhiteSpace(txtPaymentDetail.Text))

@@ -14,7 +14,14 @@ namespace Ticket_Vendor_Machine
     {
         public TicketForm()
         {
-            InitializeComponent();
+            InitializeComponent(); txtPaymentDetail.GotFocus += (s, e) =>
+            {
+                if (txtPaymentDetail.Text == "Nhập thông tin thanh toán...")
+                {
+                    txtPaymentDetail.Text = "";
+                    txtPaymentDetail.ForeColor = Color.Black;
+                }
+            };
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Ticket_Vendor_Machine
 {
-    partial class Form1
+    partial class TicketForm
     {
         /// <summary>
         /// Required designer variable.

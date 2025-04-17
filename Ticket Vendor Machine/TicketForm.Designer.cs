@@ -40,10 +40,10 @@ namespace Ticket_Vendor_Machine
             txtPaymentDetail.Location = new System.Drawing.Point(30, 110);
             txtPaymentDetail.Size = new System.Drawing.Size(200, 25);
             txtPaymentDetail.ForeColor = Color.Gray;
-            txtPaymentDetail.Text = "Nhập thông tin thanh toán...";
+            txtPaymentDetail.Text = "Nhập số điện thoại / mã ví...";
             txtPaymentDetail.GotFocus += (s, e) =>
             {
-                if (txtPaymentDetail.Text == "Nhập thông tin thanh toán...")
+                if (txtPaymentDetail.Text == "Nhập số điện thoại / mã ví...")
                 {
                     txtPaymentDetail.Text = "";
                     txtPaymentDetail.ForeColor = Color.Black;
@@ -53,7 +53,7 @@ namespace Ticket_Vendor_Machine
             {
                 if (string.IsNullOrWhiteSpace(txtPaymentDetail.Text))
                 {
-                    txtPaymentDetail.Text = "Nhập thông tin thanh toán...";
+                    txtPaymentDetail.Text = "Nhập số điện thoại / mã ví...";
                     txtPaymentDetail.ForeColor = Color.Gray;
                 }
             };
@@ -97,7 +97,7 @@ namespace Ticket_Vendor_Machine
             string paymentDetails = txtPaymentDetail.Text;
 
             if (string.IsNullOrEmpty(destination) || string.IsNullOrEmpty(paymentMethod) ||
-                string.IsNullOrWhiteSpace(paymentDetails) || paymentDetails == "Nhập thông tin thanh toán...")
+                string.IsNullOrWhiteSpace(paymentDetails) || paymentDetails == "Nhập số điện thoại / mã ví...")
             {
                 lblStatus.Text = "❌ Vui lòng điền đầy đủ thông tin.";
                 return;

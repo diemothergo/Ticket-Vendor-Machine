@@ -3,8 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
-using Ticket_Vendor_Machine;
-
+using System.Configuration;
 namespace Ticket_Vendor_Machine
 {
     public partial class TicketForm : Form
@@ -15,6 +14,8 @@ namespace Ticket_Vendor_Machine
         private Button btnBuyTicket;
         private DataGridView dgvTickets;
         private Label lblStatus;
+
+        private string connStr = ConfigurationManager.ConnectionStrings["TicketSystemDB"].ConnectionString;
 
         private void InitializeComponent()
         {
@@ -40,6 +41,14 @@ namespace Ticket_Vendor_Machine
             txtPaymentDetail.Size = new System.Drawing.Size(200, 25);
             txtPaymentDetail.ForeColor = Color.Gray;
             txtPaymentDetail.Text = "Nhập thông tin thanh toán...";
+            txtPaymentDetail.GotFocus += (s, e) =>
+            {
+                if (txtPaymentDetail.Text == "Nhập thông tin thanh toán...")
+                {
+                    txtPaymentDetail.Text = "";
+                    txtPaymentDetail.ForeColor = Color.Black;
+                }
+            };
             txtPaymentDetail.LostFocus += (s, e) =>
             {
                 if (string.IsNullOrWhiteSpace(txtPaymentDetail.Text))
@@ -87,15 +96,15 @@ namespace Ticket_Vendor_Machine
             string paymentMethod = cbPaymentMethod.Text;
             string paymentDetails = txtPaymentDetail.Text;
 
-            if (string.IsNullOrEmpty(destination) || string.IsNullOrEmpty(paymentMethod))
+            if (string.IsNullOrEmpty(destination) || string.IsNullOrEmpty(paymentMethod) ||
+                string.IsNullOrWhiteSpace(paymentDetails) || paymentDetails == "Nhập thông tin thanh toán...")
             {
-                lblStatus.Text = "Vui lòng chọn điểm đến và phương thức thanh toán.";
+                lblStatus.Text = "❌ Vui lòng điền đầy đủ thông tin.";
                 return;
             }
 
             try
             {
-                string connStr = "Data Source=.;Initial Catalog=TicketSystem;Integrated Security=True";
                 using (SqlConnection con = new SqlConnection(connStr))
                 {
                     con.Open();
@@ -105,13 +114,13 @@ namespace Ticket_Vendor_Machine
                     cmd.Parameters.AddWithValue("@method", paymentMethod);
                     cmd.Parameters.AddWithValue("@details", paymentDetails);
                     cmd.ExecuteNonQuery();
-                    lblStatus.Text = "\u2714\uFE0F Vé đã được mua thành công!";
+                    lblStatus.Text = "✅ Vé đã được mua thành công!";
                 }
                 LoadTickets();
             }
             catch (Exception ex)
             {
-                lblStatus.Text = "\u274C Lỗi: " + ex.Message;
+                lblStatus.Text = "❌ Lỗi: " + ex.Message;
             }
         }
 
@@ -119,7 +128,6 @@ namespace Ticket_Vendor_Machine
         {
             try
             {
-                string connStr = "Data Source=LAPTOP-BTH5K0DR\\SQLEXPRESS01;Initial Catalog=TicketSystem;Integrated Security=True";
                 using (SqlConnection con = new SqlConnection(connStr))
                 {
                     con.Open();
@@ -131,7 +139,7 @@ namespace Ticket_Vendor_Machine
             }
             catch (Exception ex)
             {
-                lblStatus.Text = "\u274C Không thể tải danh sách vé: " + ex.Message;
+                lblStatus.Text = "❌ Không thể tải danh sách vé: " + ex.Message;
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Ticket_Vendor_Machine;
 using System.Windows.Forms;
-
+using System.Configuration;
 namespace TicketVendorApp
 {
     static class Program
